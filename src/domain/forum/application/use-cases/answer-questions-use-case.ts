@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity'
-import { Answer } from '../entities/answer'
+import { Answer } from '../../enterprise/entities/answer'
 import { AnswerRepository } from '../repositories/answer-repository'
 
 type RequestType = {
