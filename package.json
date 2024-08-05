@@ -4,19 +4,24 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run src/domain",
-    "test:watch": "vitest src/domain"
+    "test:watch": "vitest src/domain",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^22.1.0",
+    "eslint": "^8.57.0",
     "typescript": "^5.5.4",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^2.0.5"
   },
   "dependencies": {
-    "dayjs": "^1.11.12"
+    "dayjs": "^1.11.12",
+    "eslint-plugin-vitest-globals": "^1.5.0"
   }
 }
