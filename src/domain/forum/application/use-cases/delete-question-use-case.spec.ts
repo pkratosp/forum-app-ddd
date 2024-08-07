@@ -12,7 +12,7 @@ describe('Delete question', () => {
     sut = new DeleteQuestionUseCase(inMemoryQuestionsRepository)
   })
 
-  it('should be able delte a question', async () => {
+  it('should be able delete a question', async () => {
     const _makeQuestion = makeQuestion(
       {
         authorId: new UniqueEntityID('authorid-01'),
@@ -30,7 +30,7 @@ describe('Delete question', () => {
     expect(inMemoryQuestionsRepository.items).toHaveLength(0)
   })
 
-  it('should not be able to delte a question from another user', async () => {
+  it('should not be able to delete a question from another user', async () => {
     const _makeQuestion = makeQuestion(
       {
         authorId: new UniqueEntityID('authorid-01'),
