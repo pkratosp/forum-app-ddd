@@ -4,5 +4,6 @@ export interface QuestionRepository {
   findbyId(id: string): Promise<Questions | null>
   findBySlug(slug: string): Promise<Questions | null>
   create(question: Questions): Promise<void>
+  save(question: Questions): Promise<void>
   delete(question: Questions): Promise<void>
 }
