@@ -47,6 +47,10 @@ export class Questions extends Entity<QuestionsProps> {
     return this.content.substring(0, 120).trimEnd().concat('...')
   }
 
+  get bestAnswerId() {
+    return this.props.bestAnswerId
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }
