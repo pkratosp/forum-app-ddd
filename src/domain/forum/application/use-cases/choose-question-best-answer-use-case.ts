@@ -7,11 +7,11 @@ type RequestType = {
   authorId: string
 }
 
-interface ChooseQuestionBestAnswerResponse {
+interface ChooseQuestionBestAnswerUseCaseResponse {
   question: Questions
 }
 
-export class ChooseQuestionBestAnswer {
+export class ChooseQuestionBestAnswerUseCase {
   constructor(
     private questionRepository: QuestionRepository,
     private answerRepository: AnswerRepository,
@@ -20,7 +20,7 @@ export class ChooseQuestionBestAnswer {
   async execute({
     answerId,
     authorId,
-  }: RequestType): Promise<ChooseQuestionBestAnswerResponse> {
+  }: RequestType): Promise<ChooseQuestionBestAnswerUseCaseResponse> {
     const answer = await this.answerRepository.findbyId(answerId)
 
     if (!answer) {
