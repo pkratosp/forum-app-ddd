@@ -1,5 +1,5 @@
+import { AggreteRoot } from '@/core/entities/aggregate-root'
 import { Slug } from './value-objects/slug'
-import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
@@ -14,7 +14,7 @@ export interface QuestionsProps {
   bestAnswerId?: UniqueEntityID
 }
 
-export class Questions extends Entity<QuestionsProps> {
+export class Questions extends AggreteRoot<QuestionsProps> {
   get authorId() {
     return this.props.authorId
   }
