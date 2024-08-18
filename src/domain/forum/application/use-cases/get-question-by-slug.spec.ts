@@ -19,11 +19,14 @@ describe('Create question', () => {
 
     await inMemoryQuestionsRepository.create(createQuestion)
 
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       slug: 'example-question',
     })
 
-    expect(question.id).toBeTruthy()
-    expect(question.title).toEqual(createQuestion.title)
+    expect(result.value).toMatchObject({
+      question: expect.objectContaining({
+        title: createQuestion.title
+      })
+    })
   })
 })

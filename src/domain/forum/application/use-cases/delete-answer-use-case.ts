@@ -1,11 +1,14 @@
+import { Either, left, right } from '@/core/either'
 import { AnswerRepository } from '../repositories/answer-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 type RequestType = {
   authorId: string
   answerId: string
 }
 
-interface DeleteAnswerUseCaseResponse {}
+type DeleteAnswerUseCaseResponse = Either<ResourceNotFoundError | NotAllowedError, {}>
 
 export class DeleteAnswerUseCase {
   constructor(private readonly answerRepository: AnswerRepository) {}
@@ -14,15 +17,15 @@ export class DeleteAnswerUseCase {
     const findQuestion = await this.answerRepository.findbyId(data.answerId)
 
     if (!findQuestion) {
-      throw new Error('Question not found')
+      return left(new ResourceNotFoundError())
     }
 
     if (data.authorId !== findQuestion.authorId.toString()) {
-      throw new Error('permission denied')
+      return left(new NotAllowedError())
     }
 
     await this.answerRepository.delete(findQuestion)
 
-    return {}
+    return right({})
   }
 }
