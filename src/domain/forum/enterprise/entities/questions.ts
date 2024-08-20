@@ -3,12 +3,14 @@ import { Slug } from './value-objects/slug'
 import { UniqueEntityID } from '@/core/entities/unique-entity'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
+import { QuestionAttachment } from './question-attachment'
 
 export interface QuestionsProps {
   title: string
   content: string
   authorId: UniqueEntityID
   slug: Slug
+  attachments: QuestionAttachment[]
   createdAt: Date
   updatedAt?: Date
   bestAnswerId?: UniqueEntityID
@@ -51,6 +53,10 @@ export class Questions extends AggreteRoot<QuestionsProps> {
     return this.props.bestAnswerId
   }
 
+  get attachments() {
+    return this.props.attachments
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }
@@ -71,14 +77,20 @@ export class Questions extends AggreteRoot<QuestionsProps> {
     this.touch()
   }
 
+  set attachments(attachments: QuestionAttachment[]) {
+    this.props.attachments = attachments
+    this.touch()
+  }
+
   static create(
-    props: Optional<QuestionsProps, 'createdAt' | 'slug'>,
+    props: Optional<QuestionsProps, 'createdAt' | 'slug' | 'attachments'>,
     id?: UniqueEntityID,
   ) {
     const questions = new Questions(
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.title),
+        attachments: props.attachments ?? [],
         createdAt: props.createdAt ?? new Date(),
       },
       id,
