@@ -3,14 +3,21 @@ import { EditQuestionUseCase } from './edit-question-use-case'
 import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { InMemoryQuestionsAttachmentsRepository } from 'test/repositories/in-memory-questions-attachments-repository'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryQuestionsAttachmentsRepository: InMemoryQuestionsAttachmentsRepository
 let sut: EditQuestionUseCase
 
 describe('Edit question', () => {
   beforeEach(() => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
-    sut = new EditQuestionUseCase(inMemoryQuestionsRepository)
+    inMemoryQuestionsAttachmentsRepository =
+      new InMemoryQuestionsAttachmentsRepository()
+    sut = new EditQuestionUseCase(
+      inMemoryQuestionsRepository,
+      inMemoryQuestionsAttachmentsRepository,
+    )
   })
 
   it('should be able edit a question', async () => {
@@ -28,6 +35,7 @@ describe('Edit question', () => {
       content: 'edit content',
       questionId: 'questionid-01',
       title: 'edit title',
+      attachmentsIds: [],
     })
 
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
@@ -51,6 +59,7 @@ describe('Edit question', () => {
       content: 'edit content',
       questionId: 'questionid-01',
       title: 'edit title',
+      attachmentsIds: [],
     })
 
     expect(result.isLeft()).toEqual(true)
