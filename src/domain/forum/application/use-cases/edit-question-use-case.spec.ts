@@ -4,6 +4,7 @@ import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { InMemoryQuestionsAttachmentsRepository } from 'test/repositories/in-memory-questions-attachments-repository'
+import { makeQuestionAttachments } from 'test/factories/make-question-attachments'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryQuestionsAttachmentsRepository: InMemoryQuestionsAttachmentsRepository
@@ -30,12 +31,23 @@ describe('Edit question', () => {
 
     inMemoryQuestionsRepository.create(_makeQuestion)
 
+    inMemoryQuestionsAttachmentsRepository.items.push(
+      makeQuestionAttachments({
+        questionId: _makeQuestion.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeQuestionAttachments({
+        questionId: _makeQuestion.id,
+        attachmentId: new UniqueEntityID('2'),
+      }),
+    )
+
     await sut.execute({
       authorId: 'authorid-01',
       content: 'edit content',
       questionId: 'questionid-01',
       title: 'edit title',
-      attachmentsIds: [],
+      attachmentsIds: ['1', '3'],
     })
 
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
