@@ -12,8 +12,15 @@ export class InMemoryQuestionsAttachmentsRepository
     const findAttachments = this.items.filter(
       (item) => item.questionId.toString() === questionId,
     )
-    //   .slice((page - 1) * 20, page * 20)
 
     return findAttachments
+  }
+
+  async deleteManyByQuestionId(questionId: string): Promise<void> {
+    const findeAttachmentsForDelete = this.items.filter(
+      (item) => item.questionId.toString() !== questionId,
+    )
+
+    this.items = findeAttachmentsForDelete
   }
 }
