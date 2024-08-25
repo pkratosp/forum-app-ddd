@@ -2,8 +2,8 @@ import { Either, left, right } from '@/core/either'
 import { Questions } from '../../enterprise/entities/questions'
 import { AnswerRepository } from '../repositories/answer-repository'
 import { QuestionRepository } from '../repositories/question-repository'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from '../../../../core/errors/resource-not-found-error'
+import { NotAllowedError } from '../../../../core/errors/not-allowed-error'
 
 type RequestType = {
   answerId: string
