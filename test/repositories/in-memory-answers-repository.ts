@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository'
 import { AnswerRepository } from '@/domain/forum/application/repositories/answer-repository'
@@ -22,6 +23,8 @@ export class InMemoryAnswersRepository implements AnswerRepository {
 
   async create(data: Answer) {
     this.items.push(data)
+
+    DomainEvents.dispatchEventsForAggregate(data.id)
   }
 
   async delete(answer: Answer) {
@@ -38,6 +41,8 @@ export class InMemoryAnswersRepository implements AnswerRepository {
     const findIndex = this.items.findIndex((item) => item.id === answer.id)
 
     this.items[findIndex] = answer
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async findManyByQuestionId(questionId: string, { page }: PaginationParams) {
